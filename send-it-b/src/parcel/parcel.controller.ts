@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
- 
+
 /* eslint-disable prettier/prettier */
 // src/parcel/parcel.controller.ts
 
@@ -109,9 +109,9 @@ export class ParcelController {
   @RequirePermissions(Permission.VIEW_PARCELS)
   async addTracking(
     @Param('id') parcelId: string,
-    @Body() body: {location: string; note?: string },
+    @Body() body: { location: string; note?: string },
   ) {
-    const {location, note } = body;
+    const { location, note } = body;
     const tracking = await this.parcelService.addTrackingEntry(
       parcelId,
       location,
@@ -155,5 +155,10 @@ export class ParcelController {
   @RequirePermissions(Permission.VIEW_PARCELS)
   getTrends() {
     return this.parcelService.getParcelTrends();
+  }
+
+  @Get(':id')
+  async getParcelById(@Param('id') id: string) {
+    return this.parcelService.getParcelById(id);
   }
 }

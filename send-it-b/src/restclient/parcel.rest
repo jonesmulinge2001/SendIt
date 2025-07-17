@@ -57,6 +57,11 @@ GET http://localhost:3000/admin/parcels/stats
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
 
+### Get parcel by id
+GET http://localhost:3000/admin/parcels/a64a64c5-5324-456f-b223-e321e6aa0059
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
 
 ### Get parcel trends
 GET http://localhost:3000/admin/parcels/trends

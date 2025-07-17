@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
- 
+
 /* eslint-disable prettier/prettier */
 import { SendItMailerService } from './../shared/mailer/mailer.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -68,7 +68,8 @@ export class ParcelService {
 
   async updateParcel(id: string, dto: UpdateParcelDto) {
     const existing = await this.prisma.parcel.findUnique({ where: { id } });
-    if (!existing || existing.isDeleted) throw new NotFoundException(`Parcel with ID ${id} not found or deleted`);
+    if (!existing || existing.isDeleted)
+      throw new NotFoundException(`Parcel with ID ${id} not found or deleted`);
     return this.prisma.parcel.update({
       where: { id },
       data: { ...dto },
@@ -77,7 +78,10 @@ export class ParcelService {
 
   async softDeleteParcel(id: string) {
     const existing = await this.prisma.parcel.findUnique({ where: { id } });
-    if (!existing || existing.isDeleted) throw new NotFoundException(`Parcel with ID ${id} not found or already deleted`);
+    if (!existing || existing.isDeleted)
+      throw new NotFoundException(
+        `Parcel with ID ${id} not found or already deleted`,
+      );
     return this.prisma.parcel.update({
       where: { id },
       data: { isDeleted: true },
@@ -86,19 +90,21 @@ export class ParcelService {
 
   async updateParcelStatus(id: string, status: ParcelStatus) {
     const parcel = await this.prisma.parcel.findUnique({ where: { id } });
-    if (!parcel || parcel.isDeleted) throw new NotFoundException(`Parcel with ID ${id} not found or deleted`);
+    if (!parcel || parcel.isDeleted)
+      throw new NotFoundException(`Parcel with ID ${id} not found or deleted`);
 
     const updated = await this.prisma.parcel.update({
       where: { id },
       data: { status },
     });
 
-    const statusMessage = {
-      PENDING: 'Your parcel is pending.',
-      IN_TRANSIT: 'Your parcel is now in transit.',
-      DELIVERED: 'Your parcel has been delivered!',
-      CANCELLED: 'Your parcel was cancelled.',
-    }[status] || 'Parcel status updated.';
+    const statusMessage =
+      {
+        PENDING: 'Your parcel is pending.',
+        IN_TRANSIT: 'Your parcel is now in transit.',
+        DELIVERED: 'Your parcel has been delivered!',
+        CANCELLED: 'Your parcel was cancelled.',
+      }[status] || 'Parcel status updated.';
 
     await this.addTrackingEntry(parcel.id, 'SYSTEM', statusMessage);
 
@@ -132,8 +138,11 @@ export class ParcelService {
   }
 
   async addTrackingEntry(parcelId: string, location: string, note?: string) {
-    const parcel = await this.prisma.parcel.findUnique({ where: { id: parcelId } });
-    if (!parcel) throw new NotFoundException(`Parcel with ID ${parcelId} not found`);
+    const parcel = await this.prisma.parcel.findUnique({
+      where: { id: parcelId },
+    });
+    if (!parcel)
+      throw new NotFoundException(`Parcel with ID ${parcelId} not found`);
 
     const trackingEntry = await this.prisma.parcelTrackingHistory.create({
       data: { parcelId, location, note },
@@ -148,38 +157,43 @@ export class ParcelService {
         title: parcel.title,
         location,
         note,
-        parcelId: parcel.id
-      }
+        parcelId: parcel.id,
+      },
     });
 
-    if(parcel.receiverEmail){
+    if (parcel.receiverEmail) {
       await this.sendItMailerService.sendEmail({
         to: parcel.receiverEmail,
-        subject:'Parcel tracking update',
+        subject: 'Parcel tracking update',
         template: 'tracking-update-receiver',
         context: {
           receiverName: parcel.receiverName ?? 'Valued Customer',
           title: parcel.title,
           location,
           note,
-          parcelId: parcel.id
-        }
+          parcelId: parcel.id,
+        },
       });
     }
 
     return trackingEntry;
-
   }
-
-
 
   async getParcelStats() {
     const counts = await Promise.all([
       this.prisma.parcel.count({ where: { isDeleted: false } }),
-      this.prisma.parcel.count({ where: { isDeleted: false, status: 'PENDING' } }),
-      this.prisma.parcel.count({ where: { isDeleted: false, status: 'IN_TRANSIT' } }),
-      this.prisma.parcel.count({ where: { isDeleted: false, status: 'DELIVERED' } }),
-      this.prisma.parcel.count({ where: { isDeleted: false, status: 'CANCELLED' } }),
+      this.prisma.parcel.count({
+        where: { isDeleted: false, status: 'PENDING' },
+      }),
+      this.prisma.parcel.count({
+        where: { isDeleted: false, status: 'IN_TRANSIT' },
+      }),
+      this.prisma.parcel.count({
+        where: { isDeleted: false, status: 'DELIVERED' },
+      }),
+      this.prisma.parcel.count({
+        where: { isDeleted: false, status: 'CANCELLED' },
+      }),
     ]);
 
     return {
@@ -192,8 +206,11 @@ export class ParcelService {
   }
 
   async getTrackingHistory(parcelId: string) {
-    const parcel = await this.prisma.parcel.findUnique({ where: { id: parcelId } });
-    if (!parcel) throw new NotFoundException(`Parcel with ID ${parcelId} not found`);
+    const parcel = await this.prisma.parcel.findUnique({
+      where: { id: parcelId },
+    });
+    if (!parcel)
+      throw new NotFoundException(`Parcel with ID ${parcelId} not found`);
 
     return this.prisma.parcelTrackingHistory.findMany({
       where: { parcelId },
@@ -223,4 +240,15 @@ export class ParcelService {
     }
     return weeks;
   }
+
+async getParcelById(id: string) {
+  const parcel = await this.prisma.parcel.findUnique({
+    where: { id, isDeleted: false },
+  });
+  if (!parcel) {
+    throw new NotFoundException(`Parcel with ID ${id} not found`);
+  }
+
+  return parcel;
+} 
 }
