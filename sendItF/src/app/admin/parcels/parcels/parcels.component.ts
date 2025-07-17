@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { AddTrackingEntryComponent } from '../../parceltrackingentry.component';
 
+
 @Component({
   selector: 'app-parcel-list',
   templateUrl: './parcels.component.html',
@@ -67,44 +68,51 @@ export class ParcelListComponent implements OnInit {
   }
 
   applyFilters(): void {
-    const { startDate, endDate, sender, receiver, status } = this.filterForm.value;
-  
-    this.filteredParcels = this.parcels.filter(parcel => {
+    const { startDate, endDate, sender, receiver, status } =
+      this.filterForm.value;
+
+    this.filteredParcels = this.parcels.filter((parcel) => {
       const createdDate = new Date(parcel.createdAt);
       // Zero out the time for consistent comparison
       createdDate.setHours(0, 0, 0, 0);
-  
-      const matchesStartDate = startDate 
-        ? createdDate >= this.normalizeDate(startDate) 
+
+      const matchesStartDate = startDate
+        ? createdDate >= this.normalizeDate(startDate)
         : true;
-  
-      const matchesEndDate = endDate 
-        ? createdDate <= this.normalizeDate(endDate) 
+
+      const matchesEndDate = endDate
+        ? createdDate <= this.normalizeDate(endDate)
         : true;
-  
-      const matchesSender = sender 
-        ? parcel.senderName.toLowerCase().includes(sender.toLowerCase().trim()) 
+
+      const matchesSender = sender
+        ? parcel.senderName.toLowerCase().includes(sender.toLowerCase().trim())
         : true;
-  
-      const matchesReceiver = receiver 
-        ? parcel.receiverName.toLowerCase().includes(receiver.toLowerCase().trim()) 
+
+      const matchesReceiver = receiver
+        ? parcel.receiverName
+            .toLowerCase()
+            .includes(receiver.toLowerCase().trim())
         : true;
-  
-      const matchesStatus = status 
-        ? parcel.status.toUpperCase() === status.toUpperCase().trim() 
+
+      const matchesStatus = status
+        ? parcel.status.toUpperCase() === status.toUpperCase().trim()
         : true;
-  
-      return matchesStartDate && matchesEndDate && matchesSender && matchesReceiver && matchesStatus;
+
+      return (
+        matchesStartDate &&
+        matchesEndDate &&
+        matchesSender &&
+        matchesReceiver &&
+        matchesStatus
+      );
     });
   }
-  
+
   normalizeDate(inputDate: string): Date {
     const date = new Date(inputDate);
     date.setHours(0, 0, 0, 0);
     return date;
   }
-  
-  
 
   clearFilters(): void {
     this.filterForm.reset();
@@ -117,7 +125,7 @@ export class ParcelListComponent implements OnInit {
       width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.toastr.success('Parcel updated');
         this.loadParcels();
@@ -142,31 +150,32 @@ export class ParcelListComponent implements OnInit {
 
   onStatusChange(parcelId: string, newStatus: string) {
     this.statusUpdating[parcelId] = true;
-    this.parcelService.updateParcelStatus(parcelId, newStatus as Parcel['status']).subscribe({
-      next: () => {
-        this.toastr.success(`Status updated to ${newStatus}`);
-        this.loadParcels();
-      },
-      error: () => {
-        this.toastr.error('Failed to update status');
-      },
-      complete: () => {
-        this.statusUpdating[parcelId] = false;
-      }
-    });
+    this.parcelService
+      .updateParcelStatus(parcelId, newStatus as Parcel['status'])
+      .subscribe({
+        next: () => {
+          this.toastr.success(`Status updated to ${newStatus}`);
+          this.loadParcels();
+        },
+        error: () => {
+          this.toastr.error('Failed to update status');
+        },
+        complete: () => {
+          this.statusUpdating[parcelId] = false;
+        },
+      });
   }
   onAddTracking(parcel: Parcel) {
     const dialogRef = this.dialog.open(AddTrackingEntryComponent, {
       width: '500px',
-      data: { parcelId: parcel.id }
+      data: { parcelId: parcel.id },
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
+
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.toastr.success('Tracking entry added!');
         this.loadParcels(); // Refresh the list if needed
       }
     });
   }
-  
 }

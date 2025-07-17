@@ -70,4 +70,12 @@ export class ParcelService {
       headers: this.getAuthHeaders(),
     });
   }
+
+  getParcelById(id: string): Observable<Parcel> {
+    return this.http.get<Parcel>(`${this.baseUrl}/${id}`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+  
+  
 }

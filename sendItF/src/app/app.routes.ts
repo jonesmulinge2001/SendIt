@@ -20,6 +20,7 @@ import { EmailLogsComponent } from './admin/email-logs.component';
 import { ParcelTrackingComponent } from './admin/tracking/parcel-tracking/parcel-tracking.component';
 import { TrackingHistoryComponent } from './admin/tracking-history.component';
 import { AddTrackingEntryComponent } from './admin/parceltrackingentry.component';
+import { ParcelDetailsComponent } from './admin/parcels/parcel-details/parcel-details.component';
 
 export const routes: Routes = [
   // Public routes
@@ -43,7 +44,14 @@ export const routes: Routes = [
       {path: 'logs', component: LogsComponent},
       {path: 'tracking', component: TrackingHistoryComponent},
       {path: 'create-parcel', component: ParcelCreateComponent},
-      {path: 'email-logs', component: EmailLogsComponent}
+      {path: 'email-logs', component: EmailLogsComponent},
+      {
+        path: 'parcels/:id',
+        loadComponent: () =>
+          import('./admin/parcels/parcel-details/parcel-details.component')
+            .then(m => m.ParcelDetailsComponent)
+      },
+      { path: 'parcels/details/:id', component: ParcelDetailsComponent }
 
     ],
   },
