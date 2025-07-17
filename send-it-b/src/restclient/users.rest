@@ -1,0 +1,29 @@
+### Get all users
+GET http://localhost:3000/admin/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI2ODU4MzUsImV4cCI6MTc1Mjc3MjIzNX0.S7woXJVF9WXFOYp_LhCU7pJaw6c_1g5LoNA0uijszkc
+
+###  Get a single user by ID
+GET http://localhost:3000/admin/user/054ca9db-2815-4ccc-89ee-8e3568452655
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+### Update user’s role
+PATCH http://localhost:3000/admin/user/618b8606-1da4-41f3-9bd0-d2d542724816/role
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+{
+    "role": "ADMIN"
+}
+
+### Get user stats
+GET http://localhost:3000/admin/user/users-count
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+
+### Delete a user
+DELETE http://localhost:3000/admin/user/:id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s

@@ -1,0 +1,101 @@
+<div class="px-4 md:px-8 py-4">
+
+    <h2 class="text-xl font-bold mb-4">📦 Parcel Summary</h2>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+      <div class="bg-white shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-gray-500">Total Parcels</div>
+        <div class="text-2xl font-bold text-blue-600">{{ stats?.total }}</div>
+      </div>
+  
+      <div class="bg-yellow-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-yellow-700">Pending Parcels</div>
+        <div class="text-2xl font-bold text-yellow-700">{{ stats?.pending }}</div>
+      </div>
+  
+      <div class="bg-blue-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-blue-700">In Transit Parcels</div>
+        <div class="text-2xl font-bold text-blue-700">{{ stats?.inTransit }}</div>
+      </div>
+  
+      <div class="bg-green-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-green-700">Delivered Parcels</div>
+        <div class="text-2xl font-bold text-green-700">{{ stats?.delivered }}</div>
+      </div>
+  
+      <div class="bg-red-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-red-700">Cancelled Parcels</div>
+        <div class="text-2xl font-bold text-red-700">{{ stats?.cancelled }}</div>
+      </div>
+    </div>
+  
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Pie Chart -->
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-lg font-semibold mb-2">📊 Parcel Status Overview</h2>
+        <canvas
+          baseChart
+          [data]="pieChartData"
+          [options]="pieChartOptions"
+          [type]="pieChartType"
+          class="w-full h-[300px]"
+        ></canvas>
+      </div>
+    
+      <!-- Line Chart -->
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-lg font-semibold mb-2">📈 Parcel Trends (Weekly)</h2>
+        <canvas
+          baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="'line'"
+          class="w-full h-[300px]"
+        ></canvas>
+      </div>
+    </div>
+    
+  
+    <!-- Export Buttons -->
+    <div class="flex justify-end gap-4 mt-6">
+      <button
+        (click)="exportAsCSV()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-full shadow"
+      >
+        ⬇ Export CSV
+      </button>
+      <button
+        (click)="exportChartImage()"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-full shadow"
+      >
+        🖼 Export Chart Image
+      </button>
+    </div>
+  
+    <hr>
+  
+    <h2 class="text-xl font-bold mb-4 mt-8">👥 User Summary</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-gray-500">Total Users</div>
+        <div class="text-2xl font-bold text-blue-600">{{ userStats?.totalUsers }}</div>
+      </div>
+  
+      <div class="bg-green-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-green-700">Active Users</div>
+        <div class="text-2xl font-bold text-green-700">{{ userStats?.activeUsers }}</div>
+      </div>
+  
+      <div class="bg-yellow-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-yellow-700">Suspended Users</div>
+        <div class="text-2xl font-bold text-yellow-700">{{ userStats?.suspendedUsers }}</div>
+      </div>
+  
+      <div class="bg-red-100 shadow rounded-xl p-4 text-center">
+        <div class="text-sm text-red-700">Inactive Users</div>
+        <div class="text-2xl font-bold text-red-700">{{ userStats?.inactiveUsers }}</div>
+      </div>
+    </div>
+  </div>
+  

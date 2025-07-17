@@ -1,0 +1,64 @@
+### Create a Parcel
+POST http://localhost:3000/admin/parcels
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI2MTQyNTYsImV4cCI6MTc1MjcwMDY1Nn0.erBHPQI9WJbaowyRZYmr43AY8bpOVWRPdZjvkWFHaZs
+
+{
+  "title": "Monitor Screen Delivery",
+  "description": "Dell Latitude Screen",
+  "weightKg": 0.5,
+  "pickupAddress": "Uni Ndagani Street, Chuka",
+  "destination": "Ndagani CBD",
+  "senderName": "Jonathan M",
+  "senderEmail": "jonathanmwandi@gmail.com",
+  "receiverName": "Sam K",
+  "receiverEmail": "jonathanmwandi6@gmail.com"
+}
+
+### Get all parcels
+GET http://localhost:3000/admin/parcels
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+
+### Update a parcel's details
+PATCH http://localhost:3000/admin/parcels/REPLACE_PARCEL_ID
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+
+{
+  "title": "Updated Parcel Title",
+  "weightKg": 3.2,
+  "description": "Updated description",
+  "pickupAddress": "Westlands, Nairobi",
+  "destination": "Nakuru Town"
+}
+
+
+
+### Update parcel status to IN_TRANSIT
+PATCH http://localhost:3000/admin/parcels/318e33a4-7365-46bb-a800-c16bb2faee04/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+{
+  "status": "DELIVERED"
+}
+
+### Soft delete a parcel
+DELETE http://localhost:3000/admin/parcels/REPLACE_PARCEL_ID
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTIzNjAyNjksImV4cCI6MTc1MjQ0NjY2OX0.VxkgB9LMNUM9rxrkhtaFtOZrhgN63MV1mEUuxkMnHlE
+
+
+### Get parcel stats
+GET http://localhost:3000/admin/parcels/stats
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+
+
+### Get parcel trends
+GET http://localhost:3000/admin/parcels/trends
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s

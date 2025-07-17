@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Email Details</h2>
+<mat-dialog-content>
+  <p><strong>Subject:</strong> {{ email.subject }}</p>
+  <p><strong>To:</strong> {{ email.toEmail }}</p>
+  <p><strong>Sent At:</strong> {{ email.sentAt | date:'medium' }}</p>
+  <p><strong>Status:</strong> {{ email.status }}</p>
+  <hr>
+  <div [innerHTML]="email.body"></div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

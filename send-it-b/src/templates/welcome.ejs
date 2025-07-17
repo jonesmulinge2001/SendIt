@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to <%= appName %></title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .header {
+      background: linear-gradient(135deg, #2b65ff 0%, #00c2ff 100%);
+      color: #fff;
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+    .header .emoji {
+      font-size: 48px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .content {
+      padding: 30px;
+    }
+    .greeting {
+      font-size: 22px;
+      color: #2b65ff;
+      margin-bottom: 20px;
+    }
+    .verify-box {
+      background: #eaf4ff;
+      padding: 20px;
+      border-left: 4px solid #2b65ff;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .verify-box p.code {
+      font-size: 32px;
+      font-weight: bold;
+      color: #2b65ff;
+      text-align: center;
+      letter-spacing: 4px;
+    }
+    .features {
+      background: #f0faff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .features h3 {
+      color: #2b65ff;
+      margin-top: 0;
+    }
+    .features ul {
+      padding-left: 20px;
+    }
+    .features li {
+      margin-bottom: 10px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #2b65ff;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-align: center;
+      margin: 30px auto;
+      display: block;
+    }
+    .help-section {
+      background: #fffce6;
+      border-left: 4px solid #ffcc00;
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 20px;
+    }
+    .footer {
+      background: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+    .social-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #2b65ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="emoji">📦</span>
+      <h1>Welcome to <%= appName %></h1>
+      <p>Reliable parcel delivery made easy and trackable.</p>
+    </div>
+
+    <div class="content">
+      <div class="greeting">Hi <%= name %> 👋</div>
+
+      <p>
+        Your account has been created successfully using the email:
+        <strong><%= email %></strong>.
+      </p>
+
+      <% if (verifyToken) { %>
+      <div class="verify-box">
+        <h3>🔐 Email Verification</h3>
+        <p>Use this code to verify your email:</p>
+        <p class="code"><%= verifyToken %></p>
+      </div>
+      <% } %>
+
+      <div class="features">
+        <h3>What you can do on SendIt:</h3>
+        <ul>
+          <li>📍 Track your parcel in real time</li>
+          <li>📦 View sent and received parcel history</li>
+          <li>📬 Get status updates via email</li>
+          <li>🧾 Download or print receipts</li>
+        </ul>
+      </div>
+
+      <a href="<%= loginUrl %>" class="cta-button">Track Your Parcel</a>
+
+      <div class="help-section">
+        <h3>🆘 Need Support?</h3>
+        <p>We’re always here to help you.</p>
+        <p><strong>Contact us:</strong> <a href="mailto:<%= supportEmail %>"><%= supportEmail %></a></p>
+      </div>
+
+      <p style="margin-top: 30px">
+        Cheers,<br />
+        The <strong><%= appName %></strong> Team 🚚
+      </p>
+    </div>
+
+    <div class="footer">
+      <div class="social-links">
+        <a href="#">Facebook</a> | <a href="#">X (Twitter)</a> | <a href="#">Instagram</a>
+      </div>
+      <p>This email was sent to <%= email %>. If you did not sign up, please ignore it.</p>
+      <p>&copy; <%= currentYear %> <%= appName %>. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

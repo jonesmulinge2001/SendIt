@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  password       String
+  phone          String?
+  status         AccountStatus @default(ACTIVE)
+  role           Role     @default(USER)
+  createdAt      DateTime @default(now())
+  isVerified     Boolean  @default(false)
+  resetToken     String?
+  resetTokenExpiresAt  DateTime?
+  verifyToken    String
+  verifyTokenExpiresAt DateTime?
+  updatedAt      DateTime @updatedAt
+  isDeleted      Boolean @default(false)
+  deletedAt      DateTime?
+}
+
+
+model Parcel {
+  id              String   @id @default(uuid())
+  title           String
+  description     String?
+  weightKg        Float
+  pickupAddress   String
+  destination     String
+  status          ParcelStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  isDeleted       Boolean  @default(false)
+  deletedAt       DateTime?
+
+
+senderName String
+senderEmail String
+receiverName String
+receiverEmail String
+
+  emailNotifications EmailNotification[]
+  trackingHistory ParcelTrackingHistory[]
+}
+
+
+
+
+model EmailNotification {
+  id          String   @id @default(uuid())
+  type        String   // welcome, status-update, etc.
+  toEmail     String
+  subject     String
+  body        String
+  sentAt      DateTime @default(now())
+  parcelId    String?
+  parcel      Parcel?  @relation(fields: [parcelId], references: [id])
+  status    String   @default("SENT") 
+}
+
+model ParcelTrackingHistory {
+  id        String   @id @default(uuid())
+  parcelId  String
+  location        String
+  note      String?
+  timestamp DateTime @default(now())
+
+  parcel    Parcel   @relation(fields: [parcelId], references: [id])
+}
+
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ParcelStatus {
+  PENDING
+  IN_TRANSIT
+  DELIVERED
+  CANCELLED
+}
+enum AccountStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum EmailStatus {
+  SENT
+  FAILED
+  PENDING
+}

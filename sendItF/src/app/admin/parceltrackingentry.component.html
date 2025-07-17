@@ -1,0 +1,34 @@
+<div class="p-4 min-w-[300px] max-w-[500px]">
+    <!-- Icon and Heading -->
+    <h2 class="text-lg font-bold mb-4 text-center flex items-center justify-center gap-2">
+      <span class="material-icons text-3xl text-blue-600">add_location_alt</span>
+      Add Tracking Entry
+    </h2>
+  
+    <form [formGroup]="trackingForm" (ngSubmit)="submit()" class="flex flex-col gap-4">
+      <!-- Location -->
+      <input type="text" formControlName="location" placeholder="Location" class="border p-2 rounded" />
+      <div *ngIf="trackingForm.get('location')?.invalid && trackingForm.get('location')?.touched"
+           class="text-red-500 text-xs">Location is required</div>
+  
+      <!-- Note -->
+      <textarea formControlName="note" placeholder="Note" rows="3" class="border p-2 rounded"></textarea>
+      <div *ngIf="trackingForm.get('note')?.invalid && trackingForm.get('note')?.touched"
+           class="text-red-500 text-xs">Note is required</div>
+  
+      <!-- Buttons -->
+      <div class="flex justify-end gap-3">
+        <button type="button" (click)="close()"
+                class="p-2 rounded-full bg-gray-300 flex items-center justify-center" matTooltip="Cancel">
+          <span class="material-icons text-xl text-gray-700">cancel</span>
+        </button>
+        <button type="submit" [disabled]="loading"
+                class="p-2 rounded-full text-white bg-blue-600 hover:bg-blue-700 flex items-center justify-center"
+                matTooltip="Add Tracking Entry">
+          <span *ngIf="!loading" class="material-icons text-xl">check_circle</span>
+          <span *ngIf="loading" class="animate-spin text-xl">⏳</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  

@@ -1,0 +1,79 @@
+<div class="max-w-xl mx-auto my-8 p-6 bg-white rounded-2xl shadow-md border border-gray-200 transition-all hover:shadow-lg">
+    <h2 class="text-xl font-bold text-center text-blue-700 mb-4">Create Parcel</h2>
+  
+    <form [formGroup]="parcelForm" (ngSubmit)="submit()" class="space-y-4">
+      <!-- Title and Description -->
+      <div class="relative">
+        <input formControlName="title" id="title" placeholder=" " class="input-floating peer" />
+        <label for="title" class="label-floating">Title</label>
+        <div *ngIf="parcelForm.get('title')?.invalid && parcelForm.get('title')?.touched" class="error-msg">Title is required.</div>
+      </div>
+  
+      <div class="relative">
+        <textarea formControlName="description" rows="2" placeholder=" " class="input-floating peer resize-none"></textarea>
+        <label class="label-floating">Description</label>
+        <div *ngIf="parcelForm.get('description')?.invalid && parcelForm.get('description')?.touched" class="error-msg">Required.</div>
+      </div>
+  
+      <!-- Weight -->
+      <div class="relative">
+        <input formControlName="weightKg" type="number" placeholder=" " class="input-floating peer" />
+        <label class="label-floating">Weight (kg)</label>
+        <div *ngIf="parcelForm.get('weightKg')?.invalid && parcelForm.get('weightKg')?.touched" class="error-msg">Valid weight required.</div>
+      </div>
+  
+      <!-- Pickup and Destination Side by Side -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="relative">
+          <input formControlName="pickupAddress" placeholder=" " class="input-floating peer" />
+          <label class="label-floating">Pickup Address</label>
+          <div *ngIf="parcelForm.get('pickupAddress')?.invalid && parcelForm.get('pickupAddress')?.touched" class="error-msg">Required.</div>
+        </div>
+        <div class="relative">
+          <input formControlName="destination" placeholder=" " class="input-floating peer" />
+          <label class="label-floating">Destination</label>
+          <div *ngIf="parcelForm.get('destination')?.invalid && parcelForm.get('destination')?.touched" class="error-msg">Required.</div>
+        </div>
+      </div>
+  
+      <!-- Sender Side by Side -->
+      <div class="pt-3 border-t text-sm space-y-2 animate-fade-in">
+        <h3 class="font-semibold text-gray-700">Sender</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="relative">
+            <input formControlName="senderName" placeholder=" " class="input-floating peer" />
+            <label class="label-floating">Name</label>
+            <div *ngIf="parcelForm.get('senderName')?.invalid && parcelForm.get('senderName')?.touched" class="error-msg">Required.</div>
+          </div>
+          <div class="relative">
+            <input formControlName="senderEmail" type="email" placeholder=" " class="input-floating peer" />
+            <label class="label-floating">Email</label>
+            <div *ngIf="parcelForm.get('senderEmail')?.invalid && parcelForm.get('senderEmail')?.touched" class="error-msg">Valid email required.</div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Receiver Side by Side -->
+      <div class="pt-3 border-t text-sm space-y-2 animate-fade-in delay-100">
+        <h3 class="font-semibold text-gray-700">Receiver</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="relative">
+            <input formControlName="receiverName" placeholder=" " class="input-floating peer" />
+            <label class="label-floating">Name</label>
+            <div *ngIf="parcelForm.get('receiverName')?.invalid && parcelForm.get('receiverName')?.touched" class="error-msg">Required.</div>
+          </div>
+          <div class="relative">
+            <input formControlName="receiverEmail" type="email" placeholder=" " class="input-floating peer" />
+            <label class="label-floating">Email</label>
+            <div *ngIf="parcelForm.get('receiverEmail')?.invalid && parcelForm.get('receiverEmail')?.touched" class="error-msg">Valid email required.</div>
+          </div>
+        </div>
+      </div>
+  
+      <button [disabled]="isSubmitting"
+        class="w-full py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:scale-105 transition disabled:opacity-50">
+        {{ isSubmitting ? 'Submitting...' : 'Create Parcel' }}
+      </button>
+    </form>
+  </div>
+  

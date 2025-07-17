@@ -1,0 +1,15 @@
+.mat-form-field {
+    margin-bottom: 1rem; /* keep some spacing */
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    padding-top: 4px;   /* reduce top padding */
+    padding-bottom: 4px; /* reduce bottom padding */
+  }
+  
+  .mat-input-element {
+    font-size: 0.875rem; /* slightly smaller font size */
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  

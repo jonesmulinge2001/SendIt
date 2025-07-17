@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Parcel Tracking Update</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6;">
+  <h2>📍 Hello <%= senderName %>,</h2>
+
+  <p>Your parcel <b><%= title %></b> has a new tracking update:</p>
+
+  <ul>
+    <li><strong>Location:</strong> <%= location %></li>
+    <% if (note) { %>
+    <li><strong>Note:</strong> <%= note %></li>
+    <% } %>
+    <li><strong>Parcel ID:</strong> <%= parcelId %></li>
+  </ul>
+
+  <p>Stay tuned for more updates. Thank you for using SendIt!</p>
+
+  <p style="font-size: 12px; color: gray;">This is an automated update from SendIt Logistics.</p>
+</body>
+</html>

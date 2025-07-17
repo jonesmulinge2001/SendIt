@@ -1,0 +1,23 @@
+### Add tracking entry:
+POST http://localhost:3000/admin/parcels/43147f9d-d102-434a-9353-df2c271fa878/tracking
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI2ODU4MzUsImV4cCI6MTc1Mjc3MjIzNX0.S7woXJVF9WXFOYp_LhCU7pJaw6c_1g5LoNA0uijszkc
+
+
+{
+  "status": "IN_TRANSIT",
+  "location": "Nairobi Hub",
+  "note": "Left sorting facility"
+}
+
+### Get tracking for parcel:
+GET http://localhost:3000/admin/parcels/43147f9d-d102-434a-9353-df2c271fa878/tracking
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI2ODU4MzUsImV4cCI6MTc1Mjc3MjIzNX0.S7woXJVF9WXFOYp_LhCU7pJaw6c_1g5LoNA0uijszkc
+
+
+### Get all tracking entries:
+GET http://localhost:3000/admin/parcels/tracking/all
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI2ODU4MzUsImV4cCI6MTc1Mjc3MjIzNX0.S7woXJVF9WXFOYp_LhCU7pJaw6c_1g5LoNA0uijszkc
+
