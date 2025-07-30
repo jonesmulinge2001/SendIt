@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { ParcelStats } from '../interfaces/parcel-stats';
 import { ParcelTrend } from '../interfaces/parcel-trend';
 import { UserStats } from '../interfaces/user-stats';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environment/environment.prod';
 
 @Injectable({
   providedIn: 'root',

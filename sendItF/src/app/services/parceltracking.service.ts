@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ParcelTrackingEntry } from '../interfaces/parcel-tracking-entry';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environment/environment.prod';
 
 export interface TrackingHistoryResponse {
   success: boolean;
