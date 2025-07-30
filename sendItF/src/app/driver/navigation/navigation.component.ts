@@ -18,8 +18,8 @@ export class NavigationComponent {
   @Output() isMobileMenuOpenChange = new EventEmitter<boolean>();
 
   navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', route: '/driver/dashboard' },
     { id: 'parcels', label: 'Parcels', icon: 'inventory_2', route: '/driver/parcels' },
+    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', route: '/driver/dashboard' },
     { id: 'login', label: 'Logout', icon: 'person', route: '/login' } 
   ];
   
