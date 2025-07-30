@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Parcel, ParcelResponse } from '../interfaces/parcel';
 import { CreateParcelDto } from '../interfaces/create-parcel-interface';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParcelService {
-  private baseUrl = 'http://localhost:3000/admin/parcels';
+  //private baseUrl = 'http://localhost:3000/admin/parcels';
+   private readonly baseUrl = environment.apiUrl + '/parcels';
 
   constructor(private http: HttpClient) {}
 

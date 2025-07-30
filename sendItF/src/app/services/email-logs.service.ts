@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 export interface EmailLog {
   id: string;
@@ -23,7 +24,8 @@ export interface EmailLogsResponse {
   providedIn: 'root'
 })
 export class EmailLogsService {
-  private apiUrl =  'http://localhost:3000/admin/email-logs';
+  //private apiUrl =  'http://localhost:3000/admin/email-logs';
+   private readonly apiUrl = environment.apiUrl + '/admin/email-logs';
 
 
   constructor(

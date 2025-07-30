@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ParcelTrackingEntry } from '../interfaces/parcel-tracking-entry';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 export interface TrackingHistoryResponse {
   success: boolean;
@@ -19,8 +20,8 @@ export interface SingleTrackingEntryResponse {
   providedIn: 'root'
 })
 export class ParceltrackingService {
-  private apiUrl = 'http://localhost:3000/admin/parcels';
-
+  //private apiUrl = 'http://localhost:3000/admin/parcels';
+     private readonly apiUrl = environment.apiUrl + '/admin/parcels';
   constructor(
     private http: HttpClient
   ) {}

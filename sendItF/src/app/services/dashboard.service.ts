@@ -4,12 +4,14 @@ import { map, Observable } from 'rxjs';
 import { ParcelStats } from '../interfaces/parcel-stats';
 import { ParcelTrend } from '../interfaces/parcel-trend';
 import { UserStats } from '../interfaces/user-stats';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  private readonly apiUrl = 'http://localhost:3000/admin/parcels';
+  // private readonly apiUrl = 'http://localhost:3000/admin/parcels';
+  private readonly apiUrl = environment.apiUrl + '/admin/parcels';
 
   constructor(private http: HttpClient) {}
 

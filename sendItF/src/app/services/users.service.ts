@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 export interface User {
   id: string;
@@ -16,7 +17,8 @@ export interface User {
   providedIn: 'root'
 })
 export class UsersService {
-  private apiUrl = 'http://localhost:3000/admin/user';
+  //private apiUrl = 'http://localhost:3000/admin/user';
+  private readonly apiUrl = environment.apiUrl + '/admin/user';
 
   constructor(
     private http: HttpClient

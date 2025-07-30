@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Parcel } from '../interfaces/parcel';
 import { ParcelTrackingHistory } from '../interfaces/parcel-tracking-history';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserParcelService {
-  private baseUrl = 'http://localhost:3000/dashboard';
+  //private baseUrl = 'http://localhost:3000/dashboard';
+  private readonly baseUrl = environment.apiUrl + '/dashboard';
 
   constructor(private http: HttpClient) {}
 

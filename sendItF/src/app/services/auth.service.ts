@@ -4,12 +4,14 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RegisterRequest, RegisterResponse, LoginRequest, LoginResponse, VerifyEmailRequest, GenericResponse, ResetPasswordRequest } from '../auth/interfaces/auth.dto';
+import { environment } from '../../../environment/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API = 'http://localhost:3000/auth';
+  // private readonly API = 'http://localhost:3000/auth';
+  private readonly API = environment.apiUrl + '/auth';
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
