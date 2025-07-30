@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Parcel } from '../../../interfaces/parcel';
 import { ParcelService } from '../../../services/parce.service';
+import { UsersService, User } from '../../../services/users.service'; // <-- Import UsersService & User
 import { TimeagoModule } from 'ngx-timeago';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -11,7 +12,6 @@ import { DeleteParcelComponent } from '../delete-parcel.component';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { AddTrackingEntryComponent } from '../../parceltrackingentry.component';
-
 
 @Component({
   selector: 'app-parcel-list',
@@ -36,10 +36,14 @@ export class ParcelListComponent implements OnInit {
   itemsPerPage: number = 6;
   totalPages: number[] = [];
 
+  /** NEW: Assign driver state */
+  selectedParcelId: string | null = null;
+  availableDrivers: User[] = [];
 
   constructor(
     private fb: FormBuilder,
     private parcelService: ParcelService,
+    private usersService: UsersService,          // <-- Inject UsersService
     private toastr: ToastrService,
     private dialog: MatDialog
   ) {}
@@ -92,7 +96,6 @@ export class ParcelListComponent implements OnInit {
 
     this.filteredParcels = this.parcels.filter((parcel) => {
       const createdDate = new Date(parcel.createdAt);
-      // Zero out the time for consistent comparison
       createdDate.setHours(0, 0, 0, 0);
 
       const matchesStartDate = startDate
@@ -184,6 +187,7 @@ export class ParcelListComponent implements OnInit {
         },
       });
   }
+
   onAddTracking(parcel: Parcel) {
     const dialogRef = this.dialog.open(AddTrackingEntryComponent, {
       width: '500px',
@@ -193,8 +197,42 @@ export class ParcelListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.toastr.success('Tracking entry added!');
-        this.loadParcels(); // Refresh the list if needed
+        this.loadParcels();
       }
     });
   }
+
+  /** ================================
+   *    ASSIGN DRIVER LOGIC
+   * ================================ */
+  assignParcel(parcelId: string): void {
+    this.selectedParcelId = parcelId;
+
+    // Load all users and filter to drivers
+    this.usersService.getAllUsers().subscribe({
+      next: (res) => {
+        this.availableDrivers = res.data.filter((user) => user.role === 'DRIVER');
+      },
+      error: () => {
+        this.toastr.error('Failed to load drivers');
+      },
+    });
+  }
+  onDriverSelected(parcelId: string, event: Event): void {
+    const selectEl = event.target as HTMLSelectElement;
+    const driverId = selectEl.value;
+    if (!driverId) return;
+  
+    this.parcelService.assignDriver(parcelId, driverId).subscribe({
+      next: () => {
+        this.toastr.success('Driver assigned successfully!');
+        this.selectedParcelId = null;
+        this.loadParcels();
+      },
+      error: () => {
+        this.toastr.error('Failed to assign driver');
+      },
+    });
+  }
+  
 }

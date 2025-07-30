@@ -2,13 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment.prod';
+import { map } from 'rxjs/operators';
+
 
 export interface User {
   id: string;
   name: string;
   email: string;
   phone: string;
-  role: 'USER'| 'ADMIN';
+  role: 'USER'| 'ADMIN' | 'DRIVER';
   isVerified: boolean;
   createdAt: string;
 }
@@ -41,7 +43,7 @@ export class UsersService {
     });
   }
 
-  updateUserRole(id: string, role: 'USER'| 'ADMIN'): Observable<any> {
+  updateUserRole(id: string, role: 'USER'| 'ADMIN' | 'DRIVER'): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}/role`, { role}, {
       headers: this.getHeaders()
     });
@@ -52,4 +54,11 @@ export class UsersService {
       headers: this.getHeaders(),
     });
   }
+
+  getAllDrivers(): Observable<User[]> {
+    return this.getAllUsers().pipe(
+      map(res => res.data.filter(user => user.role === 'DRIVER'))
+    );
+  }
+  
 }

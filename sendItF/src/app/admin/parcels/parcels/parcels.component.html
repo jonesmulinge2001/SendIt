@@ -1,69 +1,68 @@
 <div class="p-2">
-  <h2 class="text-2xl text-center font-bold mb-4">Parcels List  </h2>
+  <h2 class="text-2xl text-center font-bold mb-4">Parcels List</h2>
 
-  <div class=" bg-white shadow-md p-4 rounded-b-lg">
+  <div class="bg-white shadow-md p-4 rounded-b-lg">
     <form
-    [formGroup]="filterForm"
-    (ngSubmit)="applyFilters()"
-    class="grid grid-cols-1 md:grid-cols-5 gap-4"
-  >
-    <div class="flex flex-col">
-      <label class="mb-1 text-sm font-semibold text-gray-700">Created Date</label>
+      [formGroup]="filterForm"
+      (ngSubmit)="applyFilters()"
+      class="grid grid-cols-1 md:grid-cols-5 gap-4"
+    >
+      <div class="flex flex-col">
+        <label class="mb-1 text-sm font-semibold text-gray-700">Created Date</label>
+        <input
+          type="date"
+          formControlName="startDate"
+          class="border border-gray-300 p-.5 rounded focus:ring-2 focus:ring-blue-500"
+          placeholder="Created Date"
+        />
+      </div>
+
+      <div class="flex flex-col">
+        <label class="mb-1 text-sm font-semibold text-gray-700">Updated Date</label>
+        <input
+          type="date"
+          formControlName="endDate"
+          class="border border-gray-300 p-.5 rounded focus:ring-2 focus:ring-blue-500"
+          placeholder="Updated Date"
+        />
+      </div>
+
       <input
-        type="date"
-        formControlName="startDate"
-        class="border border-gray-300 p-.5 rounded focus:ring-2 focus:ring-blue-500"
-        placeholder="Created Date"
+        type="text"
+        formControlName="sender"
+        class="border p-2 rounded-full"
+        placeholder="Sender Name"
       />
-    </div>
-  
-    <div class="flex flex-col">
-      <label class="mb-1 text-sm font-semibold text-gray-700">Updated Date</label>
       <input
-        type="date"
-        formControlName="endDate"
-        class="border border-gray-300 p-.5 rounded focus:ring-2 focus:ring-blue-500"
-        placeholder="Updated Date"
+        type="text"
+        formControlName="receiver"
+        class="border p-2 rounded-full"
+        placeholder="Receiver Name"
       />
-    </div>
-  
-    <input
-      type="text"
-      formControlName="sender"
-      class="border p-2 rounded-full"
-      placeholder="Sender Name"
-    />
-    <input
-      type="text"
-      formControlName="receiver"
-      class="border p-2 rounded-full"
-      placeholder="Receiver Name"
-    />
-    <select formControlName="status" class="border p-2 rounded">
-      <option value="">All Status</option>
-      <option value="PENDING">Pending</option>
-      <option value="IN_TRANSIT">In Transit</option>
-      <option value="DELIVERED">Delivered</option>
-      <option value="CANCELLED">Cancelled</option>
-    </select>
-  
-    <div class="flex gap-2 md:col-span-5">
-      <button
-        type="submit"
-        class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
-      >
-        Apply Filters
-      </button>
-      <button
-        type="button"
-        class="border-2 border-gray-500 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-100 transition"
-        (click)="clearFilters()"
-      >
-        Clear Filters
-      </button>
-    </div>
-  </form>
-  
+      <select formControlName="status" class="border p-2 rounded">
+        <option value="">All Status</option>
+        <option value="PENDING">Pending</option>
+        <option value="IN_TRANSIT">In Transit</option>
+        <option value="DELIVERED">Delivered</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+
+      <div class="flex gap-2 md:col-span-5">
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+        >
+          Apply Filters
+        </button>
+        <button
+          type="button"
+          class="border-2 border-gray-500 bg-white text-black px-4 py-2 rounded-full hover:bg-gray-100 transition"
+          (click)="clearFilters()"
+        >
+          Clear Filters
+        </button>
+      </div>
+    </form>
   </div>
 
   <!-- Loading -->
@@ -134,46 +133,53 @@
 
           <!-- Actions -->
           <td class="px-4 py-2">
-            <div class="flex items-center gap-2">
-              <button
-                class="flex items-center justify-center rounded-full text-blue-500 disabled:text-gray-400"
-                (click)="onEdit(parcel)"
-                [disabled]="parcel.status === 'DELIVERED'"
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center gap-2">
+                <button
+                  class="flex items-center justify-center rounded-full text-blue-500 disabled:text-gray-400"
+                  (click)="onEdit(parcel)"
+                  [disabled]="parcel.status === 'DELIVERED'"
+                >
+                  <span class="material-icons text-sm">edit</span>
+                </button>
+
+                <button
+                  class="flex items-center justify-center rounded-full text-red-500"
+                  (click)="onDelete(parcel)"
+                >
+                  <span class="material-icons text-sm">delete</span>
+                </button>
+
+                <a
+                  class="text-blue-500 underline text-xs"
+                  [routerLink]="['/admin/parcels', parcel.id]"
+                >
+                  View Location
+                </a>
+
+                <!-- Assign button -->
+                <button
+                  class="bg-green-600 text-white px-2 py-1 rounded text-xs"
+                  (click)="assignParcel(parcel.id)"
+                >
+                  Assign
+                </button>
+              </div>
+
+              <!-- Driver dropdown (only for selected parcel) -->
+              <div *ngIf="selectedParcelId === parcel.id" class="mt-1">
+                <select
+                class="border rounded p-1 text-xs w-full"
+                (change)="onDriverSelected(parcel.id, $event)"
               >
-                <span class="material-icons text-sm">edit</span>
-              </button>
-              <button
-                class="flex items-center justify-center rounded-full text-red-500"
-                (click)="onDelete(parcel)"
-              >
-                <span class="material-icons text-sm">delete</span>
-              </button>
-              <!-- <select
-                class="border-2 border-blue-500 rounded p-1 text-xs disabled:bg-gray-100 disabled:text-gray-400"
-                [ngModel]="parcel.status"
-                (ngModelChange)="onStatusChange(parcel.id, $event)"
-                [disabled]="parcel.status === 'DELIVERED'"
-              >
-                <option value="PENDING">Pending</option>
-                <option value="IN_TRANSIT">In Transit</option>
-                <option value="DELIVERED">Delivered</option>
-                <option value="CANCELLED">Cancelled</option>
-              </select> -->
-              <!-- Add Tracking Button -->
-              <!-- <button
-                class="flex items-center justify-center rounded-full text-purple-600"
-                (click)="onAddTracking(parcel)"
-                matTooltip="Add Tracking"
-                [disabled]="parcel.status === 'DELIVERED'"
-              >
-                <span class="material-icons text-sm">add_location_alt</span>
-              </button> -->
-              <a
-                class="text-blue-500 underline text-xs"
-                [routerLink]="['/admin/parcels', parcel.id]"
-              >
-                View Location
-              </a>
+                <option value="">-- Select Driver --</option>
+                <option *ngFor="let driver of availableDrivers" [value]="driver.id">
+                  {{ driver.name }} ({{ driver.email }})
+                </option>
+              </select>
+              
+              
+              </div>
             </div>
           </td>
         </tr>

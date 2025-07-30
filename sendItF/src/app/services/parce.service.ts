@@ -9,8 +9,10 @@ import { environment } from '../../../environment/environment.prod';
   providedIn: 'root',
 })
 export class ParcelService {
-  //private baseUrl = 'http://localhost:3000/admin/parcels';
-   private readonly baseUrl = environment.apiUrl + '/parcels';
+  // Private base URL for non-admin endpoints
+  private readonly baseUrl = environment.apiUrl + '/parcels';
+  // Admin base URL for admin-only actions
+  private readonly adminBaseUrl = environment.apiUrl + '/admin/parcels';
 
   constructor(private http: HttpClient) {}
 
@@ -78,6 +80,15 @@ export class ParcelService {
       headers: this.getAuthHeaders(),
     });
   }
-  
-  
+
+  /** 
+   * NEW: Assign a parcel to a driver (admin endpoint)
+   */
+  assignDriver(parcelId: string, driverId: string): Observable<Parcel> {
+    return this.http.patch<Parcel>(
+      `${this.adminBaseUrl}/${parcelId}/assign-driver`,
+      { driverId },
+      { headers: this.getAuthHeaders() }
+    );
+  }
 }
