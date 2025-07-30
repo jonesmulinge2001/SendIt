@@ -1,7 +1,7 @@
 <!-- Overall Wrapper -->
 <div class="flex flex-col h-screen overflow-hidden">
-  <!-- Fixed Top Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow px-6 py-4 flex items-center justify-between">
+  <!-- Sticky Top Navbar -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow px-6 py-4 flex items-center justify-between">
     <!-- Logo -->
     <div class="flex items-center gap-2">
       <mat-icon class="text-blue-600">local_shipping</mat-icon>
@@ -15,9 +15,7 @@
         [routerLink]="item.route"
         (click)="onSelectSection(item.id)"
         class="flex items-center text-gray-600 hover:text-blue-600 transition"
-        [ngClass]="{
-          'text-blue-600 font-semibold': activeSection === item.id
-        }"
+        [ngClass]="{ 'text-blue-600 font-semibold': activeSection === item.id }"
       >
         <mat-icon class="w-5 h-5 mr-1">{{ item.icon }}</mat-icon>
         {{ item.label }}
@@ -25,35 +23,30 @@
     </nav>
 
     <!-- Mobile Menu Button -->
-    <button
-      class="lg:hidden p-2 border rounded"
-      (click)="toggleMobileMenu()"
-    >
+    <button class="lg:hidden p-2 border rounded" (click)="toggleMobileMenu()">
       <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
   </header>
 
-  <!-- Mobile Menu (Drawer) -->
+  <!-- Mobile Menu (Dropdown) -->
   <div
     *ngIf="isMobileMenuOpen"
-    class="lg:hidden fixed top-16 left-0 right-0 bg-white shadow-md z-40 flex flex-col p-4"
+    class="lg:hidden sticky top-[64px] bg-white shadow-md z-40 flex flex-col p-4"
   >
     <button
       *ngFor="let item of navItems"
       [routerLink]="item.route"
       (click)="onSelectSection(item.id); closeMobileMenu()"
       class="py-2 text-left text-gray-600 hover:text-blue-600"
-      [ngClass]="{
-        'text-blue-600 font-semibold': activeSection === item.id
-      }"
+      [ngClass]="{ 'text-blue-600 font-semibold': activeSection === item.id }"
     >
       <mat-icon class="w-5 h-5 mr-2">{{ item.icon }}</mat-icon>
       {{ item.label }}
     </button>
   </div>
 
-  <!-- Main Content -->
-  <main class="flex-1 pt-20 overflow-y-auto p-20">
+  <!-- Main Content (scrolls) -->
+  <main class="flex-1 overflow-y-auto p-20">
     <router-outlet></router-outlet>
   </main>
 </div>
