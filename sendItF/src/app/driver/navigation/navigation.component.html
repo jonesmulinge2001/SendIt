@@ -1,14 +1,12 @@
 <!-- Overall Wrapper -->
-<div class="flex flex-col h-screen overflow-hidden">
-  <!-- Sticky Top Navbar -->
-  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow px-6 py-4 flex items-center justify-between">
-    <!-- Logo -->
+<div class="flex flex-col min-h-screen">
+  <!-- Fixed Top Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-2">
       <mat-icon class="text-blue-600">local_shipping</mat-icon>
       <span class="text-xl font-bold">SendIT</span>
     </div>
 
-    <!-- Nav Links (Desktop) -->
     <nav class="hidden lg:flex gap-6">
       <button
         *ngFor="let item of navItems"
@@ -22,16 +20,15 @@
       </button>
     </nav>
 
-    <!-- Mobile Menu Button -->
     <button class="lg:hidden p-2 border rounded" (click)="toggleMobileMenu()">
       <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
   </header>
 
-  <!-- Mobile Menu (Dropdown) -->
+  <!-- Mobile Menu (fixed below header) -->
   <div
     *ngIf="isMobileMenuOpen"
-    class="lg:hidden sticky top-[64px] bg-white shadow-md z-40 flex flex-col p-4"
+    class="lg:hidden fixed left-0 right-0 top-16 bg-white shadow-md z-40 flex flex-col p-4"
   >
     <button
       *ngFor="let item of navItems"
@@ -45,8 +42,8 @@
     </button>
   </div>
 
-  <!-- Main Content (scrolls) -->
-  <main class="flex-1 overflow-y-auto p-20">
+  <!-- Main Content (window scrolls) -->
+  <main class="flex-1 pt-20 p-20">
     <router-outlet></router-outlet>
   </main>
 </div>
