@@ -78,7 +78,6 @@ export const routes: Routes = [
       {path: 'dashboard', component: NavigationComponent},
       {path: 'parcels', component: ParcelsListComponent},
       { path: 'tracking/:id', component: StatusUpdateComponent } 
-
     ],
   },
 ];
