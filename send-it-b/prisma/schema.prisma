@@ -21,6 +21,8 @@ model User {
   phone          String?
   status         AccountStatus @default(ACTIVE)
   role           Role     @default(USER)
+  parcels Parcel[]
+
   createdAt      DateTime @default(now())
   isVerified     Boolean  @default(false)
   resetToken     String?
@@ -51,6 +53,9 @@ senderName String
 senderEmail String
 receiverName String
 receiverEmail String
+
+driverId          String?
+driver          User?   @relation(fields: [driverId], references: [id])
 
   emailNotifications EmailNotification[]
   trackingHistory ParcelTrackingHistory[]
@@ -84,9 +89,12 @@ model ParcelTrackingHistory {
 
 
 enum Role {
-  USER
   ADMIN
+  USER
+  DRIVER
 }
+
+
 
 enum ParcelStatus {
   PENDING

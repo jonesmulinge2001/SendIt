@@ -1,0 +1,25 @@
+###  Get Sent Parcels
+GET http://localhost:3000/dashboard/sent?email=jonathanmwandi@gmail.com
+Content-Type: : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyODY1ODEwLCJleHAiOjE3NTI5NTIyMTB9.ic4lwWI-LrG9uwzt1vLO14T5YVLtLpRJV6FOiUIrVAw
+
+###
+
+###  Get Received Parcels
+GET http://localhost:3000/dashboard/received?email=jonathanmwandi@gmail.com
+Content-Type: : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyODY1ODEwLCJleHAiOjE3NTI5NTIyMTB9.ic4lwWI-LrG9uwzt1vLO14T5YVLtLpRJV6FOiUIrVAw
+
+###
+
+### ✅ Get Pending Pickups
+GET http://localhost:3000/dashboard/pending-pickups?email=jonathanmwandi@gmail.com
+Content-Type: : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyODY1ODEwLCJleHAiOjE3NTI5NTIyMTB9.ic4lwWI-LrG9uwzt1vLO14T5YVLtLpRJV6FOiUIrVAw
+
+###
+
+### ✅ Get Tracking History of a Parcel
+GET http://localhost:3000/dashboard/tracking-history?parcelId=a8592e61-9c23-4aeb-b7b2-e9ad11ee32eb
+Content-Type: : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyODY1ODEwLCJleHAiOjE3NTI5NTIyMTB9.ic4lwWI-LrG9uwzt1vLO14T5YVLtLpRJV6FOiUIrVAw

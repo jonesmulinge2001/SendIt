@@ -23,6 +23,7 @@ import { RequirePermissions } from 'src/auth/decorator/permissions.decorator';
 import { PermissionGuard } from 'src/guards/permissions.guards';
 import { Permission } from 'src/permissions/permission/permission.enum';
 import { UpdateParcelStatusDto } from 'src/dto/update-parcel-status.dto';
+import { AssignDriverDto } from 'src/dto/assign-driver.dto';
 
 @Controller('admin/parcels')
 export class ParcelController {
@@ -106,7 +107,7 @@ export class ParcelController {
   // ✅ 1. Add a new tracking entry
   @Post(':id/tracking')
   @UseGuards(AuthGuard('jwt'), PermissionGuard)
-  @RequirePermissions(Permission.VIEW_PARCELS)
+  @RequirePermissions(Permission.ADD_TRACKING_HISTORY)
   async addTracking(
     @Param('id') parcelId: string,
     @Body() body: { location: string; note?: string },
@@ -153,12 +154,30 @@ export class ParcelController {
   @Get('trends')
   @UseGuards(AuthGuard('jwt'), PermissionGuard)
   @RequirePermissions(Permission.VIEW_PARCELS)
-  getTrends() {
+  async getTrends() {
     return this.parcelService.getParcelTrends();
   }
 
   @Get(':id')
   async getParcelById(@Param('id') id: string) {
     return this.parcelService.getParcelById(id);
+  }
+
+  @Patch(':id/assign-driver')
+  @UseGuards(AuthGuard('jwt'), PermissionGuard)
+  @RequirePermissions(Permission.UPDATE_PARCEL_STATUS)
+  async assignDriver(
+    @Param('id') parcelId: string,
+    @Body() dto: AssignDriverDto,
+  ) {
+    const updated = await this.parcelService.assignDriver(
+      parcelId,
+      dto.driverId,
+    );
+    return {
+      success: true,
+      message: `Driver assigned to parcel ${parcelId}`,
+      data: updated,
+    };
   }
 }

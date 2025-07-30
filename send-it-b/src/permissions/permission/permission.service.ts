@@ -21,6 +21,12 @@ export class PermissionService {
     USER: [
       Permission.VIEW_PARCELS,
       Permission.MANAGE_PROFILE,
+      Permission.VIEW_OWN_PARCELS
+    ],
+    DRIVER: [
+      Permission.VIEW_ASSIGNED_PARCELS,
+      Permission.UPDATE_PARCEL_STATUS,
+      Permission.ADD_TRACKING_HISTORY
     ],
   };
 

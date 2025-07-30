@@ -1,0 +1,17 @@
+### update parcel status
+PATCH http://localhost:3000/driver/8735fcfb-b463-4e4e-960c-90485f4e49d7/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJEUklWRVIiLCJpYXQiOjE3NTM4MDg5ODYsImV4cCI6MTc1Mzg5NTM4Nn0.9uEjTu-fzoRykpuICqkygfnqk79QMFnrHJaoDUjk2Hg
+
+{
+  "status": "DELIVERED"
+}
+
+### Get parcels assigned to the logged-in driver
+GET http://localhost:3000/driver
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJEUklWRVIiLCJpYXQiOjE3NTM4MDg5ODYsImV4cCI6MTc1Mzg5NTM4Nn0.9uEjTu-fzoRykpuICqkygfnqk79QMFnrHJaoDUjk2Hg
+
+
+### get parcel by id
+GET http://localhost:3000/driver/parcel/11769c56-4f6b-4192-8abe-f8c98d186e55
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTkxOWMwNC01NjM0LTQ3MjItODRlOC0zMGRiNjQzZmM0NDQiLCJlbWFpbCI6ImpvbmF0aGFubXdhbmRpQGdtYWlsLmNvbSIsInJvbGUiOiJEUklWRVIiLCJpYXQiOjE3NTM4MDg5ODYsImV4cCI6MTc1Mzg5NTM4Nn0.9uEjTu-fzoRykpuICqkygfnqk79QMFnrHJaoDUjk2Hg

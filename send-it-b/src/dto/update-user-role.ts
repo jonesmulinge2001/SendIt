@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { IsEnum } from 'class-validator';
+import { Role } from './enums/role.enum';
 
 export class UpdateUserRoleDto {
-  @IsEnum(['ADMIN', 'USER'], {
-    message: 'Role must be ADMIN, USER',
+  @IsEnum(Role, {
+    message: 'Role must be ADMIN, USER, or DRIVER',
   })
-  role: 'ADMIN' | 'USER';
+  role: Role;
 }

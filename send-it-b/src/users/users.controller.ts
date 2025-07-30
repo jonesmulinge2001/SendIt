@@ -103,6 +103,7 @@ async getUserStats() {
             data: user,
         }
     } catch (error) {
+        console.error('Update user role failed:', error);
         throw new HttpException (
             {
                 success: false,

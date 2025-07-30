@@ -2,7 +2,7 @@
 
 /* eslint-disable prettier/prettier */
 import { SendItMailerService } from './../shared/mailer/mailer.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ParcelStatus, PrismaClient } from 'generated/prisma';
 import { CreateParcelDto } from 'src/dto/create-percel.dto';
 import { UpdateParcelDto } from 'src/dto/update-percel.dto';
@@ -153,7 +153,7 @@ export class ParcelService {
       subject: `Parcel Tracking Update`,
       template: 'tracking-update-sender',
       context: {
-        receiverName: parcel.receiverName ?? 'Valued Customer',
+        senderName: parcel.senderName ?? 'Valued Customer',
         title: parcel.title,
         location,
         note,
@@ -241,14 +241,42 @@ export class ParcelService {
     return weeks;
   }
 
-async getParcelById(id: string) {
-  const parcel = await this.prisma.parcel.findUnique({
-    where: { id, isDeleted: false },
-  });
-  if (!parcel) {
-    throw new NotFoundException(`Parcel with ID ${id} not found`);
-  }
+  async getParcelById(id: string) {
+    const parcel = await this.prisma.parcel.findUnique({
+      where: { id, isDeleted: false },
+    });
+    if (!parcel) {
+      throw new NotFoundException(`Parcel with ID ${id} not found`);
+    }
 
-  return parcel;
-} 
+    return parcel;
+  }
+  async assignDriver(parcelId: string, driverId: string) {
+    const driver = await this.prisma.user.findUnique({
+      where: { id: driverId },
+    });
+  
+    if (!driver || driver.isDeleted) {
+      throw new NotFoundException(`Driver with ID ${driverId} not found`);
+    }
+  
+    if (driver.role !== 'DRIVER') {
+      throw new BadRequestException(`User with ID ${driverId} is not a DRIVER`);
+    }
+  
+    const parcel = await this.prisma.parcel.findUnique({
+      where: { id: parcelId },
+    });
+  
+    if (!parcel || parcel.isDeleted) {
+      throw new NotFoundException(`Parcel with ID ${parcelId} not found or has been deleted`);
+    }
+  
+    return this.prisma.parcel.update({
+      where: { id: parcelId },
+      data: { driverId, status: 'PENDING' },
+    });
+  }
+  
+  
 }

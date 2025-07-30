@@ -9,12 +9,12 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
 
 ### Update user’s role
-PATCH http://localhost:3000/admin/user/618b8606-1da4-41f3-9bd0-d2d542724816/role
+PATCH http://localhost:3000/admin/user/71919c04-5634-4722-84e8-30db643fc444/role
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTI0NDczMTEsImV4cCI6MTc1MjUzMzcxMX0.yrCWtZX7ZqM6B7moRFItvRG02RgcALZDksWWZt3oj-s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjRlMDhlZS1hMzgyLTRlOTEtYWYxZC1kYjVhYTJmNGZhNzIiLCJlbWFpbCI6ImpvbmF0aGFubXVsaW5nZW13YW5kaUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NTM4MDY5MjMsImV4cCI6MTc1Mzg5MzMyM30.RO6uuXsIpxc0D4xwyoz46fI7Dha48zNwm6tGCmO3DMw
 
 {
-    "role": "ADMIN"
+    "role": "DRIVER"
 }
 
 ### Get user stats

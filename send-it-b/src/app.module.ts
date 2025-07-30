@@ -21,6 +21,9 @@ import { UsersModule } from './users/users.module';
 import { UserService } from './users/users.service';
 import { UserController } from './users/users.controller';
 import { EmailLogModule } from './email-log/email-log.module';
+import { DashboardModule } from './customer/dashboard/dashboard.module';
+import { DriverModule } from './driver/driver.module';
+import { DriverService } from './driver/driver.service';
 
 @Module({
   imports: [CloudinaryModule, 
@@ -31,7 +34,9 @@ import { EmailLogModule } from './email-log/email-log.module';
     PermissionModule,
     ParcelModule,
     UsersModule,
-    EmailLogModule
+    EmailLogModule,
+    DashboardModule,
+    DriverModule
   ],
   controllers: [AppController, AuthController, PermissionController, ParcelController, UserController],
   providers: [
@@ -42,6 +47,7 @@ import { EmailLogModule } from './email-log/email-log.module';
     PermissionService,
     ParcelService,
     UserService,
+    DriverService,
   ],
 })
 export class AppModule {}

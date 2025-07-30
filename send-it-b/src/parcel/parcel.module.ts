@@ -12,5 +12,6 @@ import { PermissionModule } from 'src/permissions/permission/permission.module';
   ],
   controllers: [ParcelController],
   providers: [ParcelService, SendItMailerService, PermissionGuard],
+  exports: [ParcelService]
 })
 export class ParcelModule {}

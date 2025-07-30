@@ -57,11 +57,11 @@ export class SendItMailerService {
   async sendEmail(options: EmailOptions): Promise<void> {
     try {
       let html = options.html;
-  
+
       if (options.template && options.context) {
         html = await this.renderTemplate(options.template, options.context);
       }
-  
+
       const mailOptions = {
         from: this.configService.get<string>('SMTP_FROM', 'sendit@example.com'),
         to: options.to,
@@ -69,29 +69,36 @@ export class SendItMailerService {
         html,
         text: options.text,
       };
-  
+
       const result = await this.transporter.sendMail(mailOptions);
       this.logger.log(`Email sent to ${options.to} (ID: ${result.messageId})`);
-  
+
       // ✅ Log email in database
       await this.prisma.emailNotification.create({
         data: {
-          toEmail: options.to,              
+          toEmail: options.to,
           subject: options.subject,
           body: html ?? options.text ?? '',
           type: options.template || 'custom',
-          parcelId: options.context && 'parcelId' in options.context ? options.context.parcelId : null,
+          parcelId:
+            options.context && 'parcelId' in options.context
+              ? options.context.parcelId
+              : null,
           sentAt: new Date(),
-          status: EmailStatus.SENT
+          status: EmailStatus.SENT,
         },
       });
     } catch (error) {
-      this.logger.error(`Error sending email to ${options.to}: ${error.message}`);
+      this.logger.error(
+        `Error sending email to ${options.to}: ${error.message}`,
+      );
     }
   }
-  
 
-  async sendWelcomeEmail(to: string, context: WelcomeEmailContext): Promise<void> {
+  async sendWelcomeEmail(
+    to: string,
+    context: WelcomeEmailContext,
+  ): Promise<void> {
     const emailOptions: EmailOptions = {
       to,
       subject: `Welcome to SendIt Courier Service`,
@@ -100,8 +107,12 @@ export class SendItMailerService {
         ...context,
         name: context.username,
         appName: context.appName || 'SendIt',
-        loginUrl: context.loginUrl || `${this.configService.get<string>('FRONTEND_URL', 'http://localhost:4200/login')}`,
-        supportEmail: context.supportEmail || this.configService.get<string>('SUPPORT_EMAIL', 'support@sendit.com'),
+        loginUrl:
+          context.loginUrl ||
+          `${this.configService.get<string>('FRONTEND_URL', 'http://localhost:4200/login')}`,
+        supportEmail:
+          context.supportEmail ||
+          this.configService.get<string>('SUPPORT_EMAIL', 'support@sendit.com'),
         currentYear: new Date().getFullYear(),
       },
     };
@@ -109,12 +120,17 @@ export class SendItMailerService {
     await this.sendEmail(emailOptions);
   }
 
-  private async renderTemplate(templateName: string, context: Record<string, any>): Promise<string> {
+  private async renderTemplate(
+    templateName: string,
+    context: Record<string, any>,
+  ): Promise<string> {
     try {
       const templatePath = path.join(this.templatesPath, `${templateName}.ejs`);
 
       if (!fs.existsSync(templatePath)) {
-        throw new Error(`Template ${templateName} not found at ${templatePath}`);
+        throw new Error(
+          `Template ${templateName} not found at ${templatePath}`,
+        );
       }
 
       const templateOptions = {
@@ -125,7 +141,9 @@ export class SendItMailerService {
 
       return await ejs.renderFile(templatePath, context, templateOptions);
     } catch (error) {
-      this.logger.error(`Error rendering template ${templateName}: ${error.message}`);
+      this.logger.error(
+        `Error rendering template ${templateName}: ${error.message}`,
+      );
       throw error;
     }
   }
