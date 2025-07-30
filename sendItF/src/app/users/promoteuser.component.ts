@@ -19,6 +19,7 @@ import { User } from '../services/users.service';
       <select [(ngModel)]="selectedRole" class="w-full p-3 border rounded-lg mb-4">
         <option value="USER">USER</option>
         <option value="ADMIN">ADMIN</option>
+        <option value="DRIVER">DRIVER</option>
       </select>
 
       <div class="flex justify-end gap-2">
