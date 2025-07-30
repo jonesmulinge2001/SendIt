@@ -31,7 +31,7 @@ import { User } from '../services/users.service';
   `
 })
 export class PromoteUserDialogComponent {
-  selectedRole: 'USER' | 'ADMIN';
+  selectedRole: 'USER' | 'ADMIN' | 'DRIVER';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { user: User },

@@ -61,9 +61,6 @@ driver          User?   @relation(fields: [driverId], references: [id])
   trackingHistory ParcelTrackingHistory[]
 }
 
-
-
-
 model EmailNotification {
   id          String   @id @default(uuid())
   type        String   // welcome, status-update, etc.
@@ -86,15 +83,11 @@ model ParcelTrackingHistory {
   parcel    Parcel   @relation(fields: [parcelId], references: [id])
 }
 
-
-
 enum Role {
   ADMIN
   USER
   DRIVER
 }
-
-
 
 enum ParcelStatus {
   PENDING
