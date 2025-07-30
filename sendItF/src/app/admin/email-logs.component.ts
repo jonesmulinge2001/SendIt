@@ -13,6 +13,10 @@ import { EmailLogDetailsComponent } from './email-logs/email-log-details/email-l
 })
 export class EmailLogsComponent implements OnInit{
   emailLogs: EmailLog[] = [];
+  paginatedEmails: EmailLog[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalPages: number[] = [];
   loading = false;
 
   constructor(
@@ -29,9 +33,24 @@ export class EmailLogsComponent implements OnInit{
     this.emailLogsService.getAllEmailLogs().subscribe({
       next: (res) => {
         this.emailLogs = res.data;
+        this.updatePaginatedEmails();
         this.loading = false;
       }
     });
+  }
+
+  updatePaginatedEmails(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedEmails = this.emailLogs.slice(start, end);
+
+    const total = Math.ceil(this.emailLogs.length / this.itemsPerPage);
+    this.totalPages = Array.from({ length: total}, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.updatePaginatedEmails();
   }
 
   viewDetails(email: EmailLog): void {

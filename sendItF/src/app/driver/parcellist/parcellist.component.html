@@ -1,0 +1,125 @@
+<div class="bg-white rounded-xl shadow-sm border border-gray-200">
+  <!-- Header -->
+  <div class="p-6 border-b border-gray-200">
+    <div
+      class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+    >
+      <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+        <span class="w-6 h-6 mr-2 inline-block rounded-full bg-blue-100"></span>
+        My Assigned Parcels
+      </h2>
+
+      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <div class="relative w-full sm:w-64">
+          <span
+            class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            >🔎</span
+          >
+          <input
+            type="text"
+            placeholder="Search parcels..."
+            [(ngModel)]="searchTerm"
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          />
+        </div>
+
+        <div class="relative w-full sm:w-56">
+          <span
+            class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            >⚙️</span
+          >
+          <select
+            [(ngModel)]="statusFilter"
+            class="w-full pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white"
+          >
+            <option value="all">All Status</option>
+            <option value="PENDING">Pending</option>
+            <option value="IN_TRANSIT">In Transit</option>
+            <option value="DELIVERED">Delivered</option>
+            <option value="CANCELLED">Cancelled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="p-6">
+    <div *ngIf="loading" class="text-center text-gray-500 py-6">
+      Loading parcels…
+    </div>
+    <div *ngIf="error" class="text-center text-red-600 py-6">{{ error }}</div>
+
+    <div *ngIf="!loading && !error">
+      <div class="space-y-4" *ngIf="filteredParcels.length; else emptyState">
+        <div
+          *ngFor="let parcel of filteredParcels"
+          (click)="goToTracking(parcel.id)"
+          class="p-4 border rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md"
+          [ngClass]="
+            selectedParcel?.id === parcel.id
+              ? 'border-blue-500 bg-blue-50'
+              : 'border-gray-200 hover:border-gray-300'
+          "
+        >
+          <div
+            class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+          >
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-semibold text-gray-800">{{ parcel.title }}</h3>
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-medium border"
+                  [ngClass]="getStatusColor(parcel.status)"
+                >
+                  {{ parcel.status.replace("_", " ") }}
+                </span>
+              </div>
+
+              <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600"
+              >
+                <div class="flex items-center">
+                  <span class="w-4 h-4 mr-2 text-gray-400">📦</span>
+                  ID: {{ parcel.id }} • {{ parcel.weightKg }}kg
+                </div>
+                <div class="flex items-center">
+                  <span class="w-4 h-4 mr-2 text-gray-400">🗓️</span>
+                  Created: {{ formatTime(parcel.createdAt) }}
+                </div>
+                <div class="flex items-center">
+                  <span class="w-4 h-4 mr-2 text-gray-400">📍</span>
+                  From: {{ parcel.pickupAddress }}
+                </div>
+                <div class="flex items-center">
+                  <span class="w-4 h-4 mr-2 text-gray-400">📍</span>
+                  To: {{ parcel.destination }}
+                </div>
+              </div>
+
+              <div class="mt-2 text-sm">
+                <span class="font-medium text-gray-700">Sender:</span>
+                <span class="text-gray-600 ml-1"
+                  >{{ parcel.senderName }} • {{ parcel.senderEmail }}</span
+                >
+              </div>
+              <div class="mt-1 text-sm">
+                <span class="font-medium text-gray-700">Receiver:</span>
+                <span class="text-gray-600 ml-1"
+                  >{{ parcel.receiverName }} • {{ parcel.receiverEmail }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #emptyState>
+        <div class="text-center py-8">
+          <div class="w-12 h-12 text-gray-400 mx-auto mb-4">📦</div>
+          <p class="text-gray-500">No parcels found matching your criteria.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

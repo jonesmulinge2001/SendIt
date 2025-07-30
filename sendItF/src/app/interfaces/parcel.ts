@@ -18,3 +18,4 @@ export interface ParcelResponse {
   success: boolean;
   data: Parcel[];
 }
+

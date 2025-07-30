@@ -1,0 +1,105 @@
+<nav class="bg-white shadow fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-3 group">
+        <img
+          src="sendIti.png"
+          alt="SendIt Logo"
+          class="h-12 w-12 border-2 cursor-pointer border-blue-600 rounded-full p-1 transition-all duration-500 group-hover:rotate-3 group-hover:scale-110"
+        />
+        <span
+          class="text-xl font-bold text-blue-600 tracking-wide transition-all duration-500 group-hover:text-blue-800 group-hover:tracking-wider"
+        >
+          SendIt
+        </span>
+      </a>
+  
+      <!-- Hamburger for small screens -->
+      <button class="md:hidden text-gray-700" (click)="toggleMenu()">
+        <span class="material-icons text-3xl">menu</span>
+      </button>
+  
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex space-x-6">
+        <button
+          *ngFor="let item of menus"
+          (click)="handleMenuClick(item)"
+          class="text-sm text-gray-700 hover:text-blue-600"
+        >
+          <div class="flex flex-col items-center">
+            <span class="material-icons text-base">{{ item.icon }}</span>
+            <span>{{ item.title }}</span>
+          </div>
+        </button>
+      </div>
+  
+      <!-- Right side (desktop only) -->
+      <div class="hidden md:flex items-center space-x-4">
+        <ng-container *ngIf="isLoggedIn; else guestLinks">
+          <img
+            routerLink="/my-profile"
+            [src]="userImage || 'sarah.jpg'"
+            class="w-8 h-8 rounded-full object-cover cursor-pointer"
+            alt="Profile"
+          />
+          <span class="text-gray-800">{{ userName }}</span>
+          <button (click)="logOut()" class="text-sm text-red-600">Logout</button>
+        </ng-container>
+  
+        <ng-template #guestLinks>
+          <a routerLink="/login" class="text-gray-700">Login</a>
+          <a
+            routerLink="/register"
+            class="bg-blue-600 text-white px-4 py-1 rounded-full cursor-pointer"
+          >
+            Join Now
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  
+    <!-- Mobile Navigation -->
+    <div
+      class="md:hidden bg-white border-t transition-all duration-300 overflow-hidden"
+      [ngClass]="{ 'max-h-[500px] p-4': menuOpen, 'max-h-0 p-0': !menuOpen }"
+    >
+      <div class="flex flex-col space-y-4">
+        <button
+          *ngFor="let item of menus"
+          (click)="handleMenuClick(item)"
+          class="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
+        >
+          <span class="material-icons">{{ item.icon }}</span>
+          <span>{{ item.title }}</span>
+        </button>
+  
+        <ng-container *ngIf="isLoggedIn; else guestLinksMobile">
+          <div class="flex items-center space-x-2 mt-3">
+            <img
+              [src]="userImage || 'assets/default-user.png'"
+              class="w-8 h-8 rounded-full object-cover"
+              alt="User"
+            />
+            <span>{{ userName }}</span>
+            <button
+              (click)="logOut(); menuOpen = false"
+              class="ml-auto text-sm text-red-600"
+            >
+              Logout
+            </button>
+          </div>
+        </ng-container>
+  
+        <ng-template #guestLinksMobile>
+          <a routerLink="/login" class="text-gray-700">Login</a>
+          <a
+            routerLink="/register"
+            class="bg-blue-600 text-white px-4 py-1 rounded-full text-center"
+          >
+            Join Now
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+  

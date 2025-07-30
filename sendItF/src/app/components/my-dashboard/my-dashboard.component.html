@@ -1,0 +1,181 @@
+<app-navbar></app-navbar>
+<div class="p-6 space-y-6">
+  <!-- Nav Tabs -->
+  <div class="flex gap-6 text-blue-600 text-sm font-semibold">
+    <button
+      [class.underline]="activeTab === 'sent'"
+      (click)="toggleTab('sent')"
+    >
+      Parcels sent by me
+    </button>
+    <button
+      [class.underline]="activeTab === 'received'"
+      (click)="toggleTab('received')"
+    >
+      Parcels sent to me
+    </button>
+  </div>
+
+  <!-- Download Report Buttons -->
+  <div class="flex gap-4 mt-2">
+    <button
+      class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+      (click)="downloadSentReceipt()"
+      *ngIf="activeTab === 'sent'"
+    >
+      Download Sent Report
+    </button>
+    <button
+      class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+      (click)="downloadReceivedReceipt()"
+      *ngIf="activeTab === 'received'"
+    >
+      Download Received Report
+  </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="flex gap-4 justify-between flex-wrap">
+    <div
+      class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-4 text-center w-full sm:w-auto flex-1 shadow-md"
+    >
+      <p class="text-3xl font-extrabold">{{ getStatusCount("IN_TRANSIT") }}</p>
+      <p class="text-sm mt-1">Parcels in transit</p>
+    </div>
+    <div
+      class="bg-gradient-to-r from-green-400 to-emerald-600 text-white rounded-xl p-4 text-center w-full sm:w-auto flex-1 shadow-md"
+    >
+      <p class="text-3xl font-extrabold">{{ getStatusCount("DELIVERED") }}</p>
+      <p class="text-sm flex items-center justify-center gap-1 mt-1">
+        <input type="checkbox" checked class="accent-white" />
+        Delivered Parcels
+      </p>
+    </div>
+    <div
+      class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-xl p-4 text-center w-full sm:w-auto flex-1 shadow-md"
+    >
+      <p class="text-3xl font-extrabold">{{ getStatusCount("PENDING") }}</p>
+      <p class="text-sm mt-1">Pending Pickups</p>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="mt-4">
+    <input
+      type="text"
+      placeholder="Search parcels"
+      class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
+    />
+  </div>
+
+  <!-- Parcel Table -->
+  <div class="overflow-x-auto">
+    <table
+      class="w-full mt-4 border rounded-lg overflow-hidden text-sm shadow-sm"
+    >
+      <thead class="bg-gray-100 text-left">
+        <tr>
+          <th class="py-3 px-4">Order ID</th>
+          <th class="py-3 px-4">Parcel Title</th>
+          <th class="py-3 px-4">Parcel Name</th>
+          <th class="py-3 px-4">Recipient</th>
+          <th class="py-3 px-4">Destination</th>
+          <th class="py-3 px-4">Status</th>
+          <th class="py-3 px-4">Last Update</th>
+          <th class="py-3 px-4">History</th>
+          <th class="py-3 px-4">Receit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let parcel of paginatedParcels"
+          class="border-b hover:bg-gray-50 transition duration-200"
+        >
+          <td class="py-3 px-4">{{ parcel.id }}</td>
+          <td class="py-3 px-4">{{ parcel.title }}</td>
+          <td class="py-3 px-4">{{ parcel.description }}</td>
+          <td class="py-3 px-4">{{ parcel.receiverName || "N/A" }}</td>
+          <td class="py-3 px-4">{{ parcel.destination || "N/A" }}</td>
+          <td class="py-3 px-4">
+            <span
+              [ngClass]="{
+                'text-green-600 font-semibold': parcel.status === 'DELIVERED',
+                'text-blue-600 font-medium': parcel.status === 'IN_TRANSIT'
+              }"
+            >
+              {{ parcel.status }}
+            </span>
+          </td>
+          <td class="py-3 px-4">
+            {{ parcel.updatedAt || parcel.createdAt | date : "short" }}
+          </td>
+          <td class="py-3 px-4">
+            <button
+              class="text-blue-600 hover:underline hover:text-blue-800 transition duration-150"
+              (click)="openTrackingHistory(parcel.id)"
+            >
+              <span class="material-icons">history</span>
+            </button>
+          </td>
+          <td class="py-3 px-4">
+            <button
+              class="bg-green-500 text-white px-4 py-.5 rounded hover:bg-green-700"
+              (click)="generateReceipt(parcel)"
+            >
+              ⬇
+            </button>
+          </td>
+          
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Parcels Message -->
+  <div *ngIf="paginatedParcels.length === 0" class="text-gray-500 mt-4">
+    No parcels found in this category.
+  </div>
+
+  <!-- Pagination -->
+  <div
+    class="flex items-center text-white justify-center gap-2 mt-4 flex-wrap"
+    *ngIf="totalPages > 1"
+  >
+    <button
+      *ngFor="let page of [].constructor(totalPages); let i = index"
+      class="px-3 py-1 rounded bg-blue-500 text-white border transition duration-150"
+      [class.bg-gray-800]="currentPage === i + 1"
+      [class.text-white]="currentPage === i + 1"
+      (click)="goToPage(i + 1)"
+    >
+      {{ i + 1 }}
+    </button>
+  </div>
+
+  <!-- Tracking History Modal -->
+  <div
+    *ngIf="showTrackingModal"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl relative">
+      <h2 class="text-xl font-semibold mb-4">Tracking History</h2>
+      <div
+        *ngFor="let tracking of selectedTrackingHistory"
+        class="border-b py-2"
+      >
+        <p><strong>Location:</strong> {{ tracking.location }}</p>
+        <p><strong>Note:</strong> {{ tracking.note }}</p>
+        <p>
+          <strong>Timestamp:</strong> {{ tracking.timestamp | date : "short" }}
+        </p>
+      </div>
+      <button
+        class="absolute top-2 right-2 text-red-600"
+        (click)="closeTrackingModal()"
+      >
+        ✖
+      </button>
+    </div>
+  </div>
+</div>

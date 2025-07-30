@@ -21,6 +21,15 @@ import { ParcelTrackingComponent } from './admin/tracking/parcel-tracking/parcel
 import { TrackingHistoryComponent } from './admin/tracking-history.component';
 import { AddTrackingEntryComponent } from './admin/parceltrackingentry.component';
 import { ParcelDetailsComponent } from './admin/parcels/parcel-details/parcel-details.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ServicesComponent } from './components/services/services.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { UserParcelsComponent } from './components/my-dashboard/my-dashboard.component';
+import { DriverGuard } from './guards/driver.guard';
+import { NavigationComponent } from './driver/navigation/navigation.component';
+import { ParcelsListComponent } from './driver/parcellist/parcellist.component';
+import { TrackingLogComponent } from './driver/trackinlog/trackinlog.component';
+import { StatusUpdateComponent } from './driver/statusupdate/statusupdate.component';
 
 export const routes: Routes = [
   // Public routes
@@ -31,6 +40,11 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  {path: 'about-us', component: AboutUsComponent},
+  {path: 'services', component: ServicesComponent},
+  {path: 'contact', component: ContactComponent},
+  {path: 'my-dashboard', component: UserParcelsComponent},
+
 
   // Admin routes (protected)
   {
@@ -52,6 +66,18 @@ export const routes: Routes = [
             .then(m => m.ParcelDetailsComponent)
       },
       { path: 'parcels/details/:id', component: ParcelDetailsComponent }
+
+    ],
+  },
+
+  {
+    path: 'driver',
+    canActivate: [DriverGuard],
+    children: [
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: 'dashboard', component: NavigationComponent},
+      {path: 'parcels', component: ParcelsListComponent},
+      { path: 'tracking/:id', component: StatusUpdateComponent } 
 
     ],
   },

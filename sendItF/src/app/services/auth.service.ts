@@ -56,9 +56,7 @@ export class AuthService {
   }
 
   // ========== Handler Methods ==========
-  isLogegedIn(): boolean {
-    return !!localStorage.getItem('token'); // returns true if token exists
-  }
+
 
   handleRegister(data: RegisterRequest): void {
     this.loadingSubject.next(true);
@@ -90,14 +88,19 @@ export class AuthService {
 
         const { token, user } = response.data;
         localStorage.setItem('token', token);
+        localStorage.setItem('email', user.email);
         localStorage.setItem('role', user.role);
         localStorage.setItem('userId', user.id);
         this.toastr.success('Login successful', 'Welcome back');
 
         if (user.role === 'ADMIN') {
           this.router.navigate(['/admin/dashboard']);
-        } else {
-          this.router.navigate(['/user/dashboard']);
+        }
+        else if (user.role === 'DRIVER') {
+          this.router.navigate(['/driver/dashboard'])
+        }
+         else {
+          this.router.navigate(['/my-dashboard']);
         }
         this.loadingSubject.next(false);
       },

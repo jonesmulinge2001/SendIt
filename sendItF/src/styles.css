@@ -3,6 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Optional: Smooth scrollbar */
+body {
+  scrollbar-gutter: stable;
+}
+
 .input-floating {
     @apply w-full px-4 py-3 border-2 rounded-xl text-base placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition-all duration-300;
   }
@@ -69,5 +83,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 0.875rem; /* slightly smaller font size */
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 

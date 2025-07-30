@@ -1,1 +1,119 @@
-<p>home works!</p>
+<app-navbar></app-navbar>
+<section class="pt-24 bg-white">
+    <!-- Hero Section -->
+    <div
+      class="text-center px-4 py-12 bg-gradient-to-r from-blue-700 to-blue-500 text-white space-y-4"
+    >
+      <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+        Your Parcel, Our Priority Delivered With Care
+      </h1>
+      <p class="italic text-lg md:text-xl text-blue-200">
+        Abstract delivery pattern
+      </p>
+      <div class="flex justify-center space-x-4 mt-6">
+        <button
+          routerLink="/send-parcel"
+          class="bg-white text-blue-700 font-bold px-6 py-3 rounded-full hover:bg-gray-200 transition"
+        >
+          send a Parcel Now
+        </button>
+        <button
+          routerLink="/about-us"
+          class="bg-transparent border border-white text-white font-bold px-6 py-3 rounded-full hover:bg-white hover:text-blue-700 transition"
+        >
+          Learn More
+        </button>
+      </div>
+    </div>
+  
+    <!-- Features Section -->
+    <div id="features-carousel" class="py-16 px-4 max-w-7xl mx-auto">
+      <h2 class="text-center text-2xl font-bold mb-10">
+        Key Features Designed For You
+      </h2>
+  
+      <div class="flex overflow-x-auto space-x-4 scrollbar-hide px-2">
+        <!-- Card 1 -->
+        <div
+          class="min-w-[180px] bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-lg shadow text-white text-center flex-shrink-0"
+        >
+          <h3 class="font-bold mb-3 text-sm">Personalized Accounts.</h3>
+          <p class="text-xs">
+            Create your secure account and log in to manage all your parcels.
+          </p>
+        </div>
+  
+        <!-- Card 2 -->
+        <div
+          class="min-w-[180px] bg-gradient-to-r from-green-400 to-blue-400 p-4 rounded-lg shadow text-white text-center flex-shrink-0"
+        >
+          <h3 class="font-bold mb-3 text-sm">Effortless Order Management.</h3>
+          <p class="text-xs">
+            Admin can easily create and manage new parcel delivery orders.
+          </p>
+        </div>
+  
+        <!-- Card 3 -->
+        <div
+          class="min-w-[180px] bg-gradient-to-r from-yellow-400 to-red-400 p-4 rounded-lg shadow text-white text-center flex-shrink-0"
+        >
+          <h3 class="font-bold mb-3 text-sm">Comprehensive Order Views.</h3>
+          <p class="text-xs">View all your delivery orders, separated clearly.</p>
+        </div>
+  
+        <!-- Card 4 -->
+        <div
+          class="min-w-[180px] bg-gradient-to-r from-pink-400 to-rose-500 p-4 rounded-lg shadow text-white text-center flex-shrink-0"
+        >
+          <h3 class="font-bold mb-3 text-sm">Instant Notifications.</h3>
+          <p class="text-xs">
+            Receive real-time email/SMS notifications when your parcel’s status is
+            updated by the admin.
+          </p>
+        </div>
+  
+        <!-- Card 5 -->
+        <div
+          class="min-w-[180px] bg-gradient-to-r from-indigo-500 to-cyan-500 p-4 rounded-lg shadow text-white text-center flex-shrink-0"
+        >
+          <h3 class="font-bold mb-3 text-sm">Live Map Tracking.</h3>
+          <p class="text-xs">
+            Visualize your parcel’s journey on an interactive Google Map with
+            pickup and destination markers.
+          </p>
+        </div>
+  
+        <!-- Card 6 -->
+        <div
+          class="min-w-[180px] bg-gradient-to-r from-orange-400 to-amber-500 p-4 rounded-lg shadow text-white text-center flex-shrink-0"
+        >
+          <h3 class="font-bold mb-3 text-sm">Admin Control & Updates.</h3>
+          <p class="text-xs">
+            Admins have the power to update parcel statuses efficiently, ensuring
+            accurate tracking.
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Track Parcel Section -->
+    <div
+      class="bg-gradient-to-r from-blue-700 to-blue-500 text-white text-center py-16 px-4"
+    >
+      <h2 class="text-2xl font-bold mb-4">See Your Deliveries on the Map!</h2>
+      <p class="mb-6 max-w-2xl mx-auto">
+        With our integrated Google Maps feature, you can visually track your
+        parcels from pickup to destination, giving you complete peace of mind.
+      </p>
+      <button
+        routerLink="/my-dashboard"
+        class="bg-white text-blue-700 font-bold px-8 py-3 rounded-full hover:bg-gray-200 transition"
+      >
+        Track Your Parcel
+      </button>
+    </div>
+  </section>
+  
+  <!-- Footer Component -->
+  <app-footer></app-footer>
+  

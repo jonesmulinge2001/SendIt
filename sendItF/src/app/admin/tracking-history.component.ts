@@ -17,6 +17,10 @@ import { ToastrService } from 'ngx-toastr';
 export class TrackingHistoryComponent implements OnInit {
   trackingEntries: ParcelTrackingEntry[] = [];
   loading: boolean = false;
+  paginatedEntries: ParcelTrackingEntry[] = [];
+  currentPage: number = 1;
+  itemsPerpage: number = 12;
+  totalPages: number[] = []
 
   displayedColumns: string[] = ['parcelId', 'location', 'note', 'timestamp'];
 
@@ -34,6 +38,7 @@ export class TrackingHistoryComponent implements OnInit {
     this.trackingService.getAllTracking().subscribe({
       next: (res) => {
         this.trackingEntries = res.data;
+        this.updatePaginatedEntries();
         this.loading = false;
       },
       error: () => {
@@ -41,5 +46,19 @@ export class TrackingHistoryComponent implements OnInit {
         this.toastr.error('Failed to fetch tracking history');
       }
     });
+  }
+
+  updatePaginatedEntries(): void {
+    const start = (this.currentPage - 1) * this.itemsPerpage;
+    const end = start + this.itemsPerpage;
+    this.paginatedEntries = this.trackingEntries.slice(start, end);
+
+    const total = Math.ceil(this.trackingEntries.length / this.itemsPerpage);
+    this.totalPages = Array.from({ length: total}, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.updatePaginatedEntries();
   }
 }

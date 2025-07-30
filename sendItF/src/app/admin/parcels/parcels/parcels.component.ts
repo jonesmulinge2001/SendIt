@@ -32,6 +32,10 @@ export class ParcelListComponent implements OnInit {
   loading = true;
   filterForm!: FormGroup;
   statusUpdating: { [key: string]: boolean } = {};
+  currentPage: number = 1;
+  itemsPerPage: number = 6;
+  totalPages: number[] = [];
+
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +61,7 @@ export class ParcelListComponent implements OnInit {
     this.parcelService.getParcels().subscribe({
       next: (data) => {
         this.parcels = data;
+        this.updatepaginatedParcels();
         this.filteredParcels = data;
         this.loading = false;
       },
@@ -65,6 +70,20 @@ export class ParcelListComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  updatepaginatedParcels(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.filteredParcels = this.parcels.slice(start, end);
+
+    const total = Math.ceil(this.parcels.length / this.itemsPerPage);
+    this.totalPages = Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    this.currentPage = page;
+    this.updatepaginatedParcels();
   }
 
   applyFilters(): void {

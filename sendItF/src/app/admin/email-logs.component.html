@@ -15,7 +15,7 @@
   </div>
 
   <!-- Email Logs Table -->
-  <div *ngIf="!loading && emailLogs.length > 0" class="overflow-x-auto">
+  <div *ngIf="!loading && paginatedEmails.length > 0" class="overflow-x-auto">
     <table class="min-w-full bg-white border rounded-lg">
       <thead class="bg-gray-100">
         <tr>
@@ -28,11 +28,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let email of emailLogs" class="border-b hover:bg-gray-50">
+        <tr *ngFor="let email of paginatedEmails" class="border-b hover:bg-gray-50">
           <td class="p-3">{{ email.toEmail }}</td>
           <td class="p-3 font-medium">{{ email.subject }}</td>
           <td class="p-3 capitalize">{{ email.type }}</td>
-          <td class="p-3">{{ email.sentAt | date : "short" }}</td>
+          <td class="p-3">{{ email.sentAt | date : 'short' }}</td>
           <td class="p-3">
             <span
               class="px-2 py-1 rounded-full text-white text-xs"
@@ -40,8 +40,9 @@
                 'bg-green-500': email.status === 'SENT',
                 'bg-red-500': email.status !== 'SENT'
               }"
-              >{{ email.status }}</span
             >
+              {{ email.status }}
+            </span>
           </td>
           <td class="p-3">
             <button
@@ -56,5 +57,20 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!loading && totalPages.length > 1" class="mt-6 flex justify-center flex-wrap gap-2">
+    <button
+      *ngFor="let page of totalPages"
+      (click)="goToPage(page)"
+      [ngClass]="{
+        'bg-blue-600 text-white': currentPage === page,
+        'bg-white text-blue-600 border border-blue-500': currentPage !== page
+      }"
+      class="px-3 py-1 text-sm rounded-full transition hover:bg-blue-500 hover:text-white"
+    >
+      {{ page }}
+    </button>
   </div>
 </div>
