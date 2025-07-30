@@ -2,10 +2,29 @@
 <div class="flex flex-col h-screen overflow-hidden">
   <!-- Fixed Top Navbar -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
     <div class="flex items-center gap-2">
       <mat-icon class="text-blue-600">local_shipping</mat-icon>
       <span class="text-xl font-bold">SendIT</span>
     </div>
+
+    <!-- Nav Links (Desktop) -->
+    <nav class="hidden lg:flex gap-6">
+      <button
+        *ngFor="let item of navItems"
+        [routerLink]="item.route"
+        (click)="onSelectSection(item.id)"
+        class="flex items-center text-gray-600 hover:text-blue-600 transition"
+        [ngClass]="{
+          'text-blue-600 font-semibold': activeSection === item.id
+        }"
+      >
+        <mat-icon class="w-5 h-5 mr-1">{{ item.icon }}</mat-icon>
+        {{ item.label }}
+      </button>
+    </nav>
+
+    <!-- Mobile Menu Button -->
     <button
       class="lg:hidden p-2 border rounded"
       (click)="toggleMobileMenu()"
@@ -14,46 +33,27 @@
     </button>
   </header>
 
-  <!-- Content Below Navbar -->
-  <div class="flex flex-1 pt-20"> <!-- push content down below the navbar -->
-
-    <!-- Sidebar -->
-    <aside
-      class="fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0"
-      [ngClass]="{
-        'translate-x-0': isMobileMenuOpen,
-        '-translate-x-full': !isMobileMenuOpen
-      }"
-    >
-      <nav class="flex-1 px-4 pt-6 space-y-2">
-        <button
-          *ngFor="let item of navItems"
-          [routerLink]="item.route"
-          (click)="onSelectSection(item.id)"
-          class="w-full flex items-center px-4 py-3 text-left rounded-lg transition"
-          [ngClass]="{
-            'bg-blue-100 text-blue-700 border-r-2 border-blue-600':
-              activeSection === item.id,
-            'text-gray-600 hover:bg-gray-100 hover:text-gray-800':
-              activeSection !== item.id
-          }"
-        >
-          <mat-icon class="w-5 h-5 mr-3">{{ item.icon }}</mat-icon>
-          {{ item.label }}
-        </button>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto p-6">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-
-  <!-- Dark overlay on mobile -->
+  <!-- Mobile Menu (Drawer) -->
   <div
     *ngIf="isMobileMenuOpen"
-    class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
-    (click)="closeMobileMenu()"
-  ></div>
+    class="lg:hidden fixed top-16 left-0 right-0 bg-white shadow-md z-40 flex flex-col p-4"
+  >
+    <button
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      (click)="onSelectSection(item.id); closeMobileMenu()"
+      class="py-2 text-left text-gray-600 hover:text-blue-600"
+      [ngClass]="{
+        'text-blue-600 font-semibold': activeSection === item.id
+      }"
+    >
+      <mat-icon class="w-5 h-5 mr-2">{{ item.icon }}</mat-icon>
+      {{ item.label }}
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 pt-20 overflow-y-auto p-6">
+    <router-outlet></router-outlet>
+  </main>
 </div>
