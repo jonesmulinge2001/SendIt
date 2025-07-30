@@ -100,7 +100,7 @@ export class AuthService {
           this.router.navigate(['/admin/dashboard']);
         }
         else if (user.role === 'DRIVER') {
-          this.router.navigate(['/driver/parcels'])
+          this.router.navigate(['/driver/dashboard'])
         }
          else {
           this.router.navigate(['/my-dashboard']);
