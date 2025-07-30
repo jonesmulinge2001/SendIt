@@ -7,7 +7,7 @@ import {
   IsUUID,
   IsEnum,
 } from 'class-validator';
-import { ParcelStatus } from '@prisma/client';
+import { ParcelStatus } from 'generated/prisma';
 
 export class UpdateParcelDto {
   @IsOptional()
